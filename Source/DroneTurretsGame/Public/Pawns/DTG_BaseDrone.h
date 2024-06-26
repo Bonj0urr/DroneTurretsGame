@@ -13,6 +13,7 @@ class UFloatingPawnMovement;
 class UCapsuleComponent;
 class UStaticMeshComponent;
 class UDTG_HealthComponent;
+class UDTG_WeaponComponent;
 
 UCLASS()
 class DRONETURRETSGAME_API ADTG_BaseDrone : public APawn
@@ -42,6 +43,9 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DTG|Components", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UDTG_HealthComponent> HealthComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DTG|Components", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UDTG_WeaponComponent> WeaponComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCapsuleComponent> CapsuleComponent;

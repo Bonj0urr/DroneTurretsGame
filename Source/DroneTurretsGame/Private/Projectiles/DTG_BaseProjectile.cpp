@@ -41,13 +41,13 @@ void ADTG_BaseProjectile::InitProjectile(UDTG_ProjectileDataAsset* ProjectileDat
 
 void ADTG_BaseProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NarmalImpuls, const FHitResult& Hit)
 {
-	AActor* Owner = this->GetOwner();
+	AActor* OwnerActor = this->GetOwner();
 
-	if (!Owner) return;
+	if (!OwnerActor) return;
 
 	if (OtherActor && OtherActor != Owner && OtherActor != this)
 	{
-		OtherActor->TakeDamage(Damage, FDamageEvent(), Owner->GetInstigatorController(), this);
+		OtherActor->TakeDamage(Damage, FDamageEvent(), OwnerActor->GetInstigatorController(), this);
 	}
 
 	this->Destroy();

@@ -11,6 +11,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/DTG_HealthComponent.h"
+#include "Components/DTG_WeaponComponent.h"
 
 ADTG_BaseDrone::ADTG_BaseDrone()
 {
@@ -32,6 +33,7 @@ ADTG_BaseDrone::ADTG_BaseDrone()
 
 	FloatingPawnMovement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("FloatingPawnMovement"));
 	HealthComponent = CreateDefaultSubobject<UDTG_HealthComponent>(TEXT("HealthComponent"));
+	WeaponComponent = CreateDefaultSubobject<UDTG_WeaponComponent>(TEXT("WeaponComponent"));
 }
 
 void ADTG_BaseDrone::BeginPlay()
@@ -90,6 +92,11 @@ void ADTG_BaseDrone::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	{
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ADTG_BaseDrone::Look);
 		EnhancedInputComponent->BindAction(FlyAction, ETriggerEvent::Triggered, this, &ADTG_BaseDrone::Fly);
+
+		if (WeaponComponent)
+		{
+			EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Started, this->WeaponComponent.Get(), &UDTG_WeaponComponent::Shoot);
+		}
 	}
 }
 
