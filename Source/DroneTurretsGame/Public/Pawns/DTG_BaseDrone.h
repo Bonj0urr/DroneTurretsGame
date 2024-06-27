@@ -29,6 +29,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	FORCEINLINE USceneComponent* GetProjectileSpawnPoint() const { return ProjectileSpawnPoint; }
+	FORCEINLINE UDTG_HealthComponent* GetHealthComponent() const { return HealthComponent; }
+	FORCEINLINE UDTG_WeaponComponent* GetWeaponComponent() const { return WeaponComponent; }
 
 protected:
 	virtual void BeginPlay() override;

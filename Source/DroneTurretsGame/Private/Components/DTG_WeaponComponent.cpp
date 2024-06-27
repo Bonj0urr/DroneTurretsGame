@@ -10,14 +10,14 @@ UDTG_WeaponComponent::UDTG_WeaponComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 
 	bCanShoot = true;
+	MaxAmmo = 30;
+	CurrentAmmo = MaxAmmo;
 }
-
 
 void UDTG_WeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
 }
-
 
 void UDTG_WeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -26,7 +26,7 @@ void UDTG_WeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UDTG_WeaponComponent::Shoot()
 {
-	if (bCanShoot)
+	if (bCanShoot && CurrentAmmo > 0)
 	{
 		AActor* Owner = this->GetOwner();
 		if (!Owner) return;
@@ -44,6 +44,9 @@ void UDTG_WeaponComponent::Shoot()
 			ProjectileClass, SpawnPoint, ControlRotation, SpawnParams);
 
 		bCanShoot = false;
+		CurrentAmmo -= 1;
+		OnAmmoChangedDelegate.Broadcast(CurrentAmmo);
+
 		BaseDrone->GetWorldTimerManager().SetTimer(
 			ShootDelayTimer,
 			[this]()

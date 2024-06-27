@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "DTG_WeaponComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAmmoChangedSignature, int32, CurrentAmmo);
+
 class ADTG_BaseProjectile;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -22,16 +24,29 @@ public:
 	UFUNCTION()
     void Shoot();
 
+	FORCEINLINE int32 GetMaxAmmo() const { return MaxAmmo; }
+	FORCEINLINE int32 GetCurrentAmmo() const { return CurrentAmmo; }
+
 protected:
 	virtual void BeginPlay() override;
+
+public:
+	UPROPERTY(BlueprintAssignable)
+	FOnAmmoChangedSignature OnAmmoChangedDelegate;
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DTG", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<ADTG_BaseProjectile> ProjectileClass;
 
 	UPROPERTY()
-	bool bCanShoot;
-	
-	UPROPERTY()
 	FTimerHandle ShootDelayTimer;
+
+	UPROPERTY()
+	bool bCanShoot;
+
+	UPROPERTY()
+	int32 MaxAmmo;
+
+	UPROPERTY()
+	int32 CurrentAmmo;
 };
