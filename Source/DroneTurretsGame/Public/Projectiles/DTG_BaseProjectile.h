@@ -6,7 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "DTG_BaseProjectile.generated.h"
 
-class UDTG_ProjectileDataAsset;
 class UProjectileMovementComponent;
 
 UCLASS()
@@ -19,8 +18,6 @@ public:
 
 public:
 	virtual void Tick(float DeltaTime) override;
-
-	void InitProjectile(UDTG_ProjectileDataAsset* ProjectileDataAsset);
 
 protected:
 	virtual void BeginPlay() override;
@@ -35,9 +32,9 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
     TObjectPtr<UProjectileMovementComponent> ProjectileMovementComponent;
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "DTG|Projectile", meta = (AllowPrivateAccess = "true") )
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "DTG|Projectile", meta = (AllowPrivateAccess = "true") )
     float Damage;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "DTG|Projectile", meta = (AllowPrivateAccess = "true") )
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "DTG|Projectile", meta = (AllowPrivateAccess = "true") )
     float LifeTime;
 };

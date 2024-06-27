@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "DTG_WeaponComponent.generated.h"
 
+class ADTG_BaseProjectile;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class DRONETURRETSGAME_API UDTG_WeaponComponent : public UActorComponent
@@ -24,6 +25,13 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DTG", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<ADTG_BaseProjectile> ProjectileClass;
 
-		
+	UPROPERTY()
+	bool bCanShoot;
+	
+	UPROPERTY()
+	FTimerHandle ShootDelayTimer;
 };
