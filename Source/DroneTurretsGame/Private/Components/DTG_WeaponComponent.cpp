@@ -14,6 +14,11 @@ UDTG_WeaponComponent::UDTG_WeaponComponent()
 	CurrentAmmo = MaxAmmo;
 }
 
+void UDTG_WeaponComponent::AddAmmo(int32 AdditinalAmmo)
+{
+	CurrentAmmo = FMath::Clamp(CurrentAmmo + AdditinalAmmo, 0, MaxAmmo);
+}
+
 void UDTG_WeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();

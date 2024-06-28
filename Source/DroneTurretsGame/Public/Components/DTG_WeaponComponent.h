@@ -27,6 +27,9 @@ public:
 	FORCEINLINE int32 GetMaxAmmo() const { return MaxAmmo; }
 	FORCEINLINE int32 GetCurrentAmmo() const { return CurrentAmmo; }
 
+	UFUNCTION()
+	void AddAmmo(int32 AdditinalAmmo);
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -44,7 +47,7 @@ private:
 	UPROPERTY()
 	bool bCanShoot;
 
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly)
 	int32 MaxAmmo;
 
 	UPROPERTY()

@@ -11,6 +11,11 @@ UDTG_HealthComponent::UDTG_HealthComponent()
 	CurrentHealth = MaxHealth;
 }
 
+void UDTG_HealthComponent::AddHealth(int32 AdditinalHealth)
+{
+	CurrentHealth = FMath::Clamp(CurrentHealth + AdditinalHealth, 0, MaxHealth);
+}
+
 void UDTG_HealthComponent::BeginPlay()
 {
 	Super::BeginPlay();

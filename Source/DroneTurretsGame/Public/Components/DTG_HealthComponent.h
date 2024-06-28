@@ -22,6 +22,9 @@ public:
 	FORCEINLINE float GetMaxHealth() const { return MaxHealth; }
 	FORCEINLINE float GetCurrentHealth() const { return CurrentHealth; }
 
+	UFUNCTION()
+	void AddHealth(int32 AdditinalHealth);
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -33,7 +36,7 @@ public:
 	FOnHealthChangedSignature OnHealthChangedDelegate;
 
 private:
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly)
 	int32 MaxHealth;
 
 	UPROPERTY()
