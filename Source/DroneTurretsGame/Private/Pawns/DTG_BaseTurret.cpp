@@ -5,6 +5,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/DTG_HealthComponent.h"
+#include "Projectiles/DTG_BaseProjectile.h"
 
 ADTG_BaseTurret::ADTG_BaseTurret()
 {
@@ -39,5 +40,18 @@ void ADTG_BaseTurret::Tick(float DeltaTime)
 void ADTG_BaseTurret::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+void ADTG_BaseTurret::Shoot(FVector TargetLocation)
+{
+	FVector SpawnPointLocation = this->GetProjectileSpawnPoint()->GetComponentLocation();
+
+	FRotator DirectionRotation = (TargetLocation - SpawnPointLocation).GetSafeNormal().Rotation();
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = this;
+
+	ADTG_BaseProjectile* Projectile = this->GetWorld()->SpawnActor<ADTG_BaseProjectile>(
+		ProjectileClass, SpawnPointLocation, DirectionRotation, SpawnParams);
 }
 

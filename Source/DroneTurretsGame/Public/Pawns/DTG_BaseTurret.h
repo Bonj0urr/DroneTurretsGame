@@ -8,6 +8,7 @@
 
 class UDTG_HealthComponent;
 class UCapsuleComponent;
+class ADTG_BaseProjectile;
 
 UCLASS()
 class DRONETURRETSGAME_API ADTG_BaseTurret : public APawn
@@ -21,6 +22,11 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	FORCEINLINE USceneComponent* GetProjectileSpawnPoint() const { return ProjectileSpawnPoint; }
+
+	UFUNCTION()
+    void Shoot(FVector TargetLocation);
 
 protected:
 	virtual void BeginPlay() override;
@@ -40,5 +46,8 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USceneComponent> ProjectileSpawnPoint;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DTG", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<ADTG_BaseProjectile> ProjectileClass;
 
 };

@@ -10,6 +10,7 @@
 class UInputAction;
 class UCameraComponent;
 class UFloatingPawnMovement;
+class UAIPerceptionStimuliSourceComponent;
 class UCapsuleComponent;
 class UStaticMeshComponent;
 class UDTG_HealthComponent;
@@ -44,6 +45,9 @@ protected:
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
     TObjectPtr<UFloatingPawnMovement> FloatingPawnMovement;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UAIPerceptionStimuliSourceComponent> StimuliSourceComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DTG|Components", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UDTG_HealthComponent> HealthComponent;

@@ -8,6 +8,7 @@
 #include "Camera/CameraComponent.h"
 #include "Camera/PlayerCameraManager.h"
 #include "GameFramework/FloatingPawnMovement.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/DTG_HealthComponent.h"
@@ -35,6 +36,9 @@ ADTG_BaseDrone::ADTG_BaseDrone()
 	FollowCamera->bUsePawnControlRotation = false;
 
 	FloatingPawnMovement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("FloatingPawnMovement"));
+
+	StimuliSourceComponent = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("StimuliSourceComponent"));
+
 	HealthComponent = CreateDefaultSubobject<UDTG_HealthComponent>(TEXT("HealthComponent"));
 	WeaponComponent = CreateDefaultSubobject<UDTG_WeaponComponent>(TEXT("WeaponComponent"));
 }
