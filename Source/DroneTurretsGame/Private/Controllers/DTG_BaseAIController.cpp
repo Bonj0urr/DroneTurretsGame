@@ -47,6 +47,6 @@ void ADTG_BaseAIController::HandleSightSense(AActor* Actor, FAIStimulus Stimulus
 
 	if (UBlackboardComponent* BlackboardComponent = GetBlackboardComponent())
 	{
-		BlackboardComponent->SetValueAsVector("TargetLocation", Actor->GetActorLocation());
+		BlackboardComponent->SetValueAsObject("TargetActor", Actor);
 	}
 }

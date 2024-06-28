@@ -24,8 +24,13 @@ EBTNodeResult::Type UDTG_BTTask_ShootDrone::ExecuteTask(UBehaviorTreeComponent& 
 
     if (UBlackboardComponent* BlackboardComponent = OwnerComp.GetBlackboardComponent())
     {
-        FVector TargetLocation = BlackboardComponent->GetValueAsVector(GetSelectedBlackboardKey());
-        BaseTurret->Shoot(TargetLocation);
+        UObject* TargetObject = BlackboardComponent->GetValueAsObject(GetSelectedBlackboardKey());
+        if(!TargetObject) return EBTNodeResult::Failed;
+
+        AActor* TargetActor = Cast<AActor>(TargetObject);
+        if (!TargetActor) return EBTNodeResult::Failed;
+
+        BaseTurret->Shoot(TargetActor->GetActorLocation());
 
         return EBTNodeResult::Succeeded;
     }
