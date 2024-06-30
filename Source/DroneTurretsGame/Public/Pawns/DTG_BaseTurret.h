@@ -28,6 +28,12 @@ public:
 	UFUNCTION()
     void Shoot(FVector TargetLocation);
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void RotateTurretTower(FRotator DirectionRotation);
+
+	UFUNCTION(BlueprintCallable)
+	void SpawnProjectile(FRotator ProjectileRotation);
+
 protected:
 	virtual void BeginPlay() override;
 

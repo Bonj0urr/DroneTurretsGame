@@ -48,10 +48,16 @@ void ADTG_BaseTurret::Shoot(FVector TargetLocation)
 
 	FRotator DirectionRotation = (TargetLocation - SpawnPointLocation).GetSafeNormal().Rotation();
 
+	RotateTurretTower(DirectionRotation);
+}
+
+void ADTG_BaseTurret::SpawnProjectile(FRotator ProjectileRotation)
+{
+	FVector SpawnPointLocation = this->GetProjectileSpawnPoint()->GetComponentLocation();
+
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.Owner = this;
 
 	ADTG_BaseProjectile* Projectile = this->GetWorld()->SpawnActor<ADTG_BaseProjectile>(
-		ProjectileClass, SpawnPointLocation, DirectionRotation, SpawnParams);
+		ProjectileClass, SpawnPointLocation, ProjectileRotation, SpawnParams);
 }
-
