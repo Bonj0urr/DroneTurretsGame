@@ -17,6 +17,7 @@ UDTG_WeaponComponent::UDTG_WeaponComponent()
 void UDTG_WeaponComponent::AddAmmo(int32 AdditinalAmmo)
 {
 	CurrentAmmo = FMath::Clamp(CurrentAmmo + AdditinalAmmo, 0, MaxAmmo);
+	OnAmmoChangedDelegate.Broadcast(CurrentAmmo);
 }
 
 void UDTG_WeaponComponent::BeginPlay()

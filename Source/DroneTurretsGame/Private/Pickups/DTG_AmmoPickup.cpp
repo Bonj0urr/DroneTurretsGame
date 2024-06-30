@@ -19,5 +19,6 @@ void ADTG_AmmoPickup::OnPickup(UPrimitiveComponent* OverlappedComponent, AActor*
 	{
 		WeaponComponent->AddAmmo(PickupAmount);
 	}
+	this->Destroy();
 }
 

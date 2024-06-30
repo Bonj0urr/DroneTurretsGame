@@ -10,7 +10,7 @@ ADTG_BasePickup::ADTG_BasePickup()
 	PrimaryActorTick.bCanEverTick = true;
 
 	PickupMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PickupMesh"));
-	PickupMesh->SetupAttachment(RootComponent);
+	RootComponent = PickupMesh;
 
 	CollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionComponent"));
 	CollisionComponent->SetupAttachment(PickupMesh);

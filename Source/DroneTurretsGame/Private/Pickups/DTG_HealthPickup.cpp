@@ -19,4 +19,5 @@ void ADTG_HealthPickup::OnPickup(UPrimitiveComponent* OverlappedComponent, AActo
 	{
 		HealthComponent->AddHealth(PickupAmount);
 	}
+	this->Destroy();
 }

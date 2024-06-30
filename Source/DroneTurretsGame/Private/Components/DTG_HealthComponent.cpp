@@ -14,6 +14,7 @@ UDTG_HealthComponent::UDTG_HealthComponent()
 void UDTG_HealthComponent::AddHealth(int32 AdditinalHealth)
 {
 	CurrentHealth = FMath::Clamp(CurrentHealth + AdditinalHealth, 0, MaxHealth);
+	OnHealthChangedDelegate.Broadcast(CurrentHealth);
 }
 
 void UDTG_HealthComponent::BeginPlay()
