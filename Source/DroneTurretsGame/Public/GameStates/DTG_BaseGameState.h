@@ -28,5 +28,5 @@ public:
 	FOnEndGameResultSignature OnEndGameResultDelegate;
 
 private:
-	int32 CurrentEnemyCount = 3;
+	int32 CurrentEnemyCount;
 };

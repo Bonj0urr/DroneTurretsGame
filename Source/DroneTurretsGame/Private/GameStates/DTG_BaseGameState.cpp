@@ -2,9 +2,17 @@
 
 
 #include "GameStates/DTG_BaseGameState.h"
+#include "Kismet/GameplayStatics.h"
+#include "Pawns/DTG_BaseTurret.h"
 
 void ADTG_BaseGameState::BeginPlay()
 {
+	TArray<AActor*> Actors;
+	UGameplayStatics::GetAllActorsOfClass(this, ADTG_BaseTurret::StaticClass(), Actors);
+
+	CurrentEnemyCount = Actors.Num();
+
+	UE_LOG(LogTemp, Warning, TEXT("Current enemy count: %d"), CurrentEnemyCount);
 }
 
 void ADTG_BaseGameState::DecrementEnemyCount()
