@@ -4,7 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "InputActionValue.h"
 #include "DTG_BaseDrone.generated.h"
+
+class UInputAction;
+class UCameraComponent;
+class UFloatingPawnMovement;
+class UAIPerceptionStimuliSourceComponent;
+class UCapsuleComponent;
+class UStaticMeshComponent;
+class UDTG_HealthComponent;
+class UDTG_WeaponComponent;
 
 UCLASS()
 class DRONETURRETSGAME_API ADTG_BaseDrone : public APawn
@@ -14,12 +24,61 @@ class DRONETURRETSGAME_API ADTG_BaseDrone : public APawn
 public:
 	ADTG_BaseDrone();
 
-protected:
-	virtual void BeginPlay() override;
-
 public:	
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	FORCEINLINE USceneComponent* GetProjectileSpawnPoint() const { return ProjectileSpawnPoint; }
+	FORCEINLINE UDTG_HealthComponent* GetHealthComponent() const { return HealthComponent; }
+	FORCEINLINE UDTG_WeaponComponent* GetWeaponComponent() const { return WeaponComponent; }
+
+protected:
+	virtual void BeginPlay() override;
+
+	UFUNCTION()
+	void Look(const FInputActionValue& Value);
+
+	UFUNCTION()
+	void Fly(const FInputActionValue& Value);
+
+private:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UFloatingPawnMovement> FloatingPawnMovement;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+    TObjectPtr<UAIPerceptionStimuliSourceComponent> StimuliSourceComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DTG|Components", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UDTG_HealthComponent> HealthComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DTG|Components", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UDTG_WeaponComponent> WeaponComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UCapsuleComponent> CapsuleComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UStaticMeshComponent> StaticMeshComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USceneComponent> ProjectileSpawnPoint;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UCameraComponent> FollowCamera;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DTG|Input", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> LookAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DTG|Input", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> FlyAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DTG|Input", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> ShootAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DTG|Camera", meta = (AllowPrivateAccess = "true"))
+	float MinClampCameraLook;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "DTG|Camera", meta = (AllowPrivateAccess = "true"))
+	float MaxClampCameraLook;
 };
