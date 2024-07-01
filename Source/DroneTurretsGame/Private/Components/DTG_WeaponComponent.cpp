@@ -62,7 +62,7 @@ void UDTG_WeaponComponent::Shoot()
 					bCanShoot = true;
 				}
 			},
-			2.0f,
+			1.0f,
 			false
 		);
 	}

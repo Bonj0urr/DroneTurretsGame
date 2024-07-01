@@ -3,6 +3,9 @@
 
 #include "HUDs/DTG_BaseHUD.h"
 #include "UMGs/DTG_CoreWidget.h"
+#include "UMGs/Menus/DTG_EndGameWidget.h"
+#include "GameStates/DTG_BaseGameState.h"
+#include "Kismet/GameplayStatics.h"
 
 void ADTG_BaseHUD::BeginPlay()
 {
@@ -25,6 +28,20 @@ void ADTG_BaseHUD::InitHUD()
 			CoreWidgetInstance->AddToViewport();
 		}
 	}
+
+	if (EndGameWidgetClass)
+	{
+		if (EndGameWidgetInstance = CreateWidget<UDTG_EndGameWidget>(this->GetWorld(), EndGameWidgetClass))
+		{
+			EndGameWidgetInstance->AddToViewport();
+		}
+	}
+
+	ADTG_BaseGameState* BaseGameState = Cast<ADTG_BaseGameState>(UGameplayStatics::GetGameState(this));
+	if (BaseGameState)
+	{
+		BaseGameState->OnEndGameResultDelegate.AddDynamic(this, &ADTG_BaseHUD::ShowEndGameWidget);
+	}
 }
 
 void ADTG_BaseHUD::ClearHUD()
@@ -34,4 +51,22 @@ void ADTG_BaseHUD::ClearHUD()
 		CoreWidgetInstance->RemoveFromParent();
 		CoreWidgetInstance = nullptr;
 	}
+}
+
+void ADTG_BaseHUD::ShowEndGameWidget(bool IsWinner)
+{
+	EndGameWidgetInstance->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+
+	if (IsWinner)
+	{
+		EndGameWidgetInstance->SetNewTextEndGame("You Won!");
+	}
+	else
+	{
+		EndGameWidgetInstance->SetNewTextEndGame("You Lost!");
+	}
+
+	FInputModeUIOnly InputMode;
+	GetOwningPlayerController()->SetInputMode(InputMode);
+	GetOwningPlayerController()->SetShowMouseCursor(true);
 }

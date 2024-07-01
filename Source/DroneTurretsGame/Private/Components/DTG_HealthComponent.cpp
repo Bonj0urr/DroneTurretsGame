@@ -2,6 +2,8 @@
 
 
 #include "Components/DTG_HealthComponent.h"
+#include "GameStates/DTG_BaseGameState.h"
+#include "Kismet/GameplayStatics.h"
 
 UDTG_HealthComponent::UDTG_HealthComponent()
 {
@@ -44,6 +46,17 @@ void UDTG_HealthComponent::DamageTaken(AActor* DamagedActor, float Damage, const
 
 	if (CurrentHealth <= 0)
 	{
+		ADTG_BaseGameState* BaseGameState = Cast<ADTG_BaseGameState>(UGameplayStatics::GetGameState(this));
+		if (!BaseGameState) return;
+		
+		if (Owner->ActorHasTag("Player"))
+		{
+			BaseGameState->OnEndGameResultDelegate.Broadcast(false);
+		}
+		else
+		{
+			BaseGameState->DecrementEnemyCount();
+		}
 		Owner->Destroy();
 	}
 }
